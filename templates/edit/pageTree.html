@@ -1,0 +1,15 @@
+<ul>
+    {% for page in pageTree %}
+        <li>
+            {% if page.page.itemId %}
+                <a href="/edit/page/?pageId={{ page.page.itemId }}"><span class="ui-icon {% ifequal currentPage.key page.page.key %}ui-icon-play{% else %}ui-icon-document{% endifequal %}"></span>{{ page.page.name }}</a>
+            {% else %}
+                <a href="/edit/page/?pageName={{ page.page.key.name }}"><span class="ui-icon {% ifequal currentPage.key page.page.key %}ui-icon-play{% else %}ui-icon-document{% endifequal %}"></span>{{ page.page.name }}</a>
+            
+            {% endif %}
+            {% if page.children %}
+                {% PageTree page.children currentPage %}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

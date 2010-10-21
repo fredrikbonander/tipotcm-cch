@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+{% block title %}{{ pageModule.name }}{% endblock %}
+
+{% block content %}
+    <div class="content {{ pageType }}">
+        {% include "modules/topmenu.html" %}
+        <section class="container_10 oh">
+            <div class="grid_3">
+                <div class="article_image">
+                {% for image in pageContent.ImageList %}
+                    <img src="{{ image.url }}=s288" />
+                {% endfor %}
+                </div>
+            </div>
+            <div class="grid_7">
+                <div class="article">
+                    <ul class="news_list">
+                    {% for news in pageContent %}
+                        <li>
+                            <article>
+                                <header><h2>{{ news.title }} <time pubdate datetime="{{ news.date }}">| {{ news.date }}</time></h2></header>
+                                {% autoescape off %}
+                                {{ news.content }}
+                                {% endautoescape %}
+                            </article>
+                        </li>
+                    {% endfor %}                
+                    </ul>    
+                </div>
+            </div>
+        </section>        
+    </div>
+{% endblock %}

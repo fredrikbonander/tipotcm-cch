@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{% block title %}{{ pageModule.name }}{% endblock %}
+
+{% block content %}
+    <div class="content {{ pageType }}">
+        {% include "modules/topmenu.html" %}
+        <section class="container_10 oh">
+            <div class="grid_10 image_gallery">
+                {% for image in pageContent.ImageList %}
+                    <div class="image_single"{% if not forloop.first %} style="display:none"{% endif %}>
+                        <div class="image_wrapper">
+                            <img src="{{ image.url }}" alt="{{ image.description|striptags }}" title="{{ image.description|striptags }}" />
+                        </div>
+                        {% autoescape off %}
+                        {{ image.description }}
+                        {% endautoescape %}
+                        <span>Ref #{{ image.referance }}, <a href="/en-us/contact/">{{ pageContent.ImageText }}</a></span>
+                    </div>
+                {% endfor %}
+                <div role="navigation" class="image_gallery_controls floatRight"><a href="javascript:void(0)">{{ pageContent.PreviousImage }}</a> <span>/</span> <a href="javascript:void(0)">{{ pageContent.NextImage }}</a></div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

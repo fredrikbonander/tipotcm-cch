@@ -1,0 +1,17 @@
+<input type="hidden" name="news_id" value="{{ pageTemplate.pageDataByQuery.itemId }}"/>
+<div class="modules_box">
+    <div class="top">
+        <label for="module_news_title_{{ language }}_{{ forloop.counter }}">Title</label>
+    </div>
+    <div class="bottom">
+        <input type="text" name="module_news_title|newsfeed" id="module_news_title_{{ language }}_{{ forloop.counter }}" value="{{ pageTemplate.pageDataByQuery.title }}" />
+    </div>
+</div>
+<div class="modules_box">
+    <div class="top">
+        <label for="module_news_content_{{ language }}_{{ forloop.counter }}">Content</label>
+    </div>
+    <div class="bottom">
+        <textarea name="module_news_content" id="module_news_content_{{ language }}_{{ forloop.counter }}">{{ pageTemplate.pageDataByQuery.content }}</textarea>
+    </div>
+</div>

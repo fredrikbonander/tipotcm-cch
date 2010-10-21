@@ -1,0 +1,101 @@
+{% extends "index.html" %}
+{% block title %} Main {% endblock %}
+
+{% block content %}
+    <div class="container_16">
+        <div class="grid_4">
+            {% include "modules/leftmenu.html" %}
+        </div>
+        <div class="grid_12">
+            <h2>{{ currentPage.name }}</h2>
+            <div class="status_placeholder">
+                {% include "modules/statusmessages.html" %}
+            </div>
+            <div id="tabs"> 
+                <ul>
+                    {% for language in settings.languages %}
+                        <li><a href="#tabs-{{ forloop.counter }}">{{ language }}</a></li>
+                    {% endfor %}
+                    <li><a href="#tabs-99">Page settings</a></li>
+                </ul> 
+                {% for language in settings.languages %}
+                    <div id="tabs-{{ forloop.counter }}" class="oh">
+                        <form action="/edit/action/AddUpdateContent" method="post" accept-charset="utf-8">
+                            <div class="grid_7">
+                                <input type="hidden" name="lang" value="{{ language }}" />
+                                <input type="hidden" name="pageKey" value="{{ pageTemplate.pageKey }}" />
+                                <div class="modules_box">
+                                    <label for="pageModule_name">Page name</label>
+                                    {% for name, pageModule in pageTemplate.pageModules.iteritems %}
+                                        {% ifequal name language %}
+                                            <input type="text" id="page_module_name" name="page_module_name" value="{{ pageModule.name }}" />
+                                        {% endifequal %}
+                                    {% endfor %}
+                                </div>
+                                {% ifequal pageTemplate.modules.type "newsfeed" %}
+                                    {% include "modules/module_newsfeed.html" %}
+                                {% endifequal %}
+                                {% for module in pageTemplate.modules %}
+                                    {% ifequal module.type "static" %}
+                                        {% Module module language forloop.counter %}
+                                    {% endifequal %}
+                                {% endfor %}
+                                <button>[Save]</button>
+                            </div>
+                            <div class="grid_4">
+                                <h2>Settings</h2>
+                                {% for name, pageModule in pageTemplate.pageModules.iteritems %}
+                                    {% ifequal name language %}
+                                        <input type="checkbox" id="publish" name="publish"{% if pageModule.published %} checked="checked"{% endif %}/>
+                                        <label for="publish">Show in menu?</label>
+                                    {% endifequal %}
+                                {% endfor %}
+                                {% ifequal pageTemplate.modules.type "newsfeed" %}
+                                    <h2>News list</h2>
+                                    <ul>
+                                    {% for name, items in pageTemplate.modules.data.iteritems %}
+                                        {% ifequal name language %}
+                                            {% for news in items %}
+                                                <li><a href="?pageId={{ currentPage.itemId }}&newsId={{ news.itemId }}">{{ news.title }}</a></li>
+                                            {% endfor %}
+                                        {% endifequal %}
+                                    {% endfor %}
+                                {% endifequal %}
+                                {% for module in pageTemplate.modules %}
+                                    {% ifequal module.type "imageList" %}
+                                        {% Module module language forloop.counter  %}
+                                    {% endifequal %}
+                                {% endfor %}       
+                            </div>
+                        </form>
+                    </div>
+                {% endfor %}
+                <div id="tabs-99" class="oh">
+                    <div class="grid_7">
+                        <form action="/edit/action/AddUpdatePageSettings" method="post" accept-charset="utf-8">
+                            <input type="hidden" name="page_id" id="page_id" value="{{ currentPage.itemId }}">
+                            <ul class="page_settings">
+                                <li>
+                                    <input type="checkbox" id="startpage" name="startpage"{% if currentPage.startpage %} checked="checked"{% endif %}/>
+                                    <label for="startpage">Is startpage?</label>
+                                </li>
+                                <li>
+                                    <label for="sort_index">Sort index</label>
+                                    <input type="text" id="sort_index" name="sort_index" value="{{ currentPage.sortIndex }}"/>                                    
+                                </li>
+                            </ul>
+                            <button>[Save]</button>
+                        </form>
+                    </div>
+                    <div class="grid_4">
+                        <form action="/edit/action/DeletePage" method="post" accept-charset="utf-8">
+                            <input type="hidden" name="page_id" id="page_id" value="{{ currentPage.itemId }}">
+                            <button class="ui-state-error">[Delete page]</button>
+                        </form>
+                    </div>
+                </div>
+            </div> 
+            
+        </div>
+    </div>
+{% endblock %}

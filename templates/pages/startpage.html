@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+{% block title %}{{ pageModule.name }}{% endblock %}
+
+{% block content %}
+    <div class="content {{ pageType }}">
+        {% include "modules/topmenu.html" %}
+        <section class="container_10 oh">
+            <article>
+                <div class="grid_10 image_holder">
+                {% for image in pageContent.ImageList %}
+                    <img src="{{ image.url }}" alt="{{ image.description|striptags }}" title="{{ image.description|striptags }}" />
+                {% endfor %}
+                </div>
+                <header class="grid_4">
+                    <hgroup> 
+                        <h1>{{ pageContent.MainHeading }}</h1>
+                        <h2>{{ pageContent.SubHeading }}</h2>
+                    </hgroup>
+                </header>
+                <div class="grid_5">
+                    {% autoescape off %}
+                    {{ pageContent.MainTextBox }}
+                    {% endautoescape %}
+                </div>
+            </article>
+        </section>
+    </div>
+{% endblock %}

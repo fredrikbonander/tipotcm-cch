@@ -1,0 +1,31 @@
+<div class="page_images">
+    <input type="hidden" value="{% for image in data %}{{ image.itemId}},{%endfor%}" name="{{ module.name }}|imageList|{{ module.itemId }}|{{ language }}" id="{{ module.name }}|imageList|{{ module.itemId }}|{{ language }}" />
+    <h2>Image list</h2>
+    <ul id="image_list_{{ language }}" class="image_list">
+        {% for image in data %}
+            <li><a href="javascript:void(0);" rel="{{ image.imageUrl }}"><span class="ui-icon ui-icon-image"></span>{{ image.name }}</a></li>
+        {% endfor %}
+    </ul>
+    <div class="image_list_wrapper" id="image_list_wrapper_{{ language }}">
+        <div class="list_area">
+            <h3>All images</h3>
+            <ul id="image_list_{{ language }}_all" class="image_list image_list_connector_{{ language }}">
+                {% for image in module.imageList %}
+                    <li id="imageIdAll_{{ image.itemId }}"><a href="javascript:void(0);" rel="{{ image.imageUrl }}"><span class="ui-icon ui-icon-image"></span>{{ image.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>   
+        <div class="list_area">
+            <h3>Selected images</h3>
+            <ul id="image_list_{{ language }}_selected" class="image_list image_list_connector_{{ language }}">
+                {% for image in data %}
+                    <li id="imageId_{{ image.itemId }}"><a href="javascript:void(0);" rel="{{ image.imageUrl }}"><span class="ui-icon ui-icon-image"></span>{{ image.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <button id="save_image_list_{{ module.name }}|imageList|{{ module.itemId }}|{{ language }}" class="save_image_list" type="button">[Save image list]</button>
+        </div>
+    </div>
+    <button id="{{ language }}" class="select_images_btn" type="button"><span class="ui-icon ui-icon-image"></span> [Select Images]</button>    
+</div>  

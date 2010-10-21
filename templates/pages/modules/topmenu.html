@@ -1,0 +1,8 @@
+<div class="container_10 top_menu_border">
+    <div class="container_10 top_menu">
+        <nav>{% SitePageTree pageTree currentPage %}</nav>
+        {% ifnotequal pageType "StartPage" %}
+            <a href="/{{ lang }}/">Martin Adler</a>
+        {% endifnotequal %}
+    </div>
+</div>

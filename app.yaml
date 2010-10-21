@@ -4,5 +4,16 @@ runtime: python
 api_version: 1
 
 handlers:
+- url: /favicon.ico
+  static_files: ui/images/favicon.ico
+  upload: ui/images/favicon.ico
+
+- url: /robots.txt
+  static_files: ui/robots.txt
+  upload: ui/robots.txt
+  
+- url: /ui
+  static_dir: ui
+ 
 - url: .*
   script: main.py

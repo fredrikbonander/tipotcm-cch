@@ -1,0 +1,54 @@
+{% extends "index.html" %}
+{% block title %} Main {% endblock %}
+
+{% block content %}
+    <div class="container_16">
+        <div class="grid_4">
+            {% include "modules/leftmenu.html" %}
+        </div>
+        <div class="grid_11">
+            <h2>Users</h2>
+            <div class="status_placeholder">
+                {% include "modules/statusmessages.html" %}
+            </div>
+            <div class="oh ui-widget ui-widget-content ui-corner-all">
+                <div class="grid_7">
+                    <form action="/edit/action/AddOrUpdateUser" enctype="multipart/form-data" method="post">
+                        <input type="hidden" name="user_id" value="{{ currentUser.itemId }}" />
+                        <div class="modules_box">
+                            <label for="username">Username</label>
+                            <input id="username" type="text" name="username" value="{{ currentUser.username }}" />
+                        </div>
+                       <div class="modules_box">
+                            <label for="password">Password</label>
+                            <input id="password" type="password" name="password" />
+                        </div>
+                        <div class="modules_box">
+                            <label for="premission_level">Premission level</label>
+                            <select name="premission_level" id="premission_level">
+                                <option value="1"{% ifequal currentUser.premissionLevel 1 %} selected="selected"{% endifequal %}>Editor</option>
+                                <option value="2"{% ifequal currentUser.premissionLevel 2 %} selected="selected"{% endifequal %}>Administrator</option>
+                                <option value="3"{% ifequal currentUser.premissionLevel 3 %} selected="selected"{% endifequal %}>Superuser</option>
+                            </select>
+                        </div>
+                        <button class="floatLeft">[Save]</button>
+                    </form>
+                    {% if currentUser.itemId %}
+                        <form action="/edit/action/DeleteUser" enctype="multipart/form-data" method="post">
+                            <input type="hidden" name="user_id" value="{{ currentUser.itemId }}" />
+                            <button class="floatRight ui-state-error">[Delete]</button>
+                        </form>
+                    {% endif %}
+                </div>
+                <div class="grid_3">
+                    <h2>User list</h2>
+                    <ul class="image_list">
+                        {% for user in userList %}
+                            <li><a href="/edit/users/?userId={{ user.itemId }}"><span class="ui-icon ui-icon-person"></span>{{ user.username }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

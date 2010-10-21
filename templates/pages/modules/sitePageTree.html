@@ -1,0 +1,7 @@
+<ul role="navigation">
+    {% for item in pageTree %}
+        <li>
+            <a href="{{ item.pageModule.path }}">{{ item.pageModule.name }}</a>
+        </li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="google-site-verification" content="zkWIXuPFTnHaBzXDv8T_urM5X5XA-bpnTurTFDtyjKA" />
+        <title>{% block title %}{%endblock%} &ndash; Martin Adler</title>
+        <link rel="stylesheet" href="/ui/styles/main.css" type="text/css" />
+        <!--[if IE]>
+            <script type="text/javascript">
+                document.createElement("article");
+                document.createElement("footer");
+                document.createElement("header");
+                document.createElement("hgroup");
+                document.createElement("nav");
+                document.createElement("section");
+                document.createElement("time");
+            </script>
+        <![endif]-->
+    </head>
+
+    <body id="index" class="home">
+        {% block content %}
+        {% endblock %}
+        <section class="container_10">
+            <div class="footer_border">
+                <footer class="footer">
+                    <ul role="navigation" class="footer_menu">
+                        <li>
+                            <div class="share_this">
+                                <ul>
+                                    <li><a rel="external" href="http://twitter.com/home?status={{ fullPath }}">Twitter</a> / </li>
+                                    <li><a rel="external" href="http://www.facebook.com/share.php?u={{ fullPath }}">Facebook</a> / </li>
+                                    <li><a rel="external" href="mailto:?subject={{ fullPath }}">E-Mail</a></li>
+                                </ul>
+                            </div>
+                            <a href="javascript:void(0)">Share this</a>
+                        </li>
+                        {% for page in footerTree.children %}
+                            <li><a rel="copyright" href="{{ page.pageModule.path }}">{{ page.pageModule.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </footer>
+            </div>
+        </section>
+        <script type="text/javascript" src="/ui/scripts/lib/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="/ui/scripts/opt/util.js"></script>
+        <script type="text/javascript" src="/ui/scripts/opt/core.js"></script>
+        <!--<script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-18579449-1']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        </script> -->
+    </body>
+</html>

@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+{% block title %} Main {% endblock %}
+
+{% block content %}
+    <div class="container_16">
+        <div class="grid_4">
+            {% include "modules/leftmenu.html" %}
+        </div>
+        <div class="grid_11">
+            <h2>Page container</h2>
+            <div class="status_placeholder">
+                {% include "modules/statusmessages.html" %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

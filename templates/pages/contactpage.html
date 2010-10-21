@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+{% block title %}{{ pageModule.name }}{% endblock %}
+
+{% block content %}
+    <div class="content {{ pageType }}">
+        {% include "modules/topmenu.html" %}
+        <section class="container_10 oh">
+            <div class="grid_3">
+                <div class="article_image">
+                <!-- -->
+                </div>
+            </div>
+            <div class="grid_7">
+                <div class="article">
+                    <header><h1>{{ pageContent.MainHeading }}</h1></header>
+                    {% autoescape off %}
+                        {{ pageContent.MainTextBox }}
+                    {% endautoescape %}
+                    <h2>{{ pageContent.AboutHeading }}</h2>
+                    {% autoescape off %}
+                        {{ pageContent.AboutTextBox }}
+                    {% endautoescape %}
+                    <form action="/action/SendContactEmail" method="post">
+                        <label for="name">{{ pageContent.YourNameLabel }}</label>
+                        <input type="text" id="name" name="name" />
+                        <label for="email">{{ pageContent.YourEmailLabel}}</label>
+                        <input type="email" id="email" name="email" />
+                        <label for="reference">{{ pageContent.ReferenceLabel}}</label>
+                        <textarea id="reference" name="reference"></textarea>
+                        <button>Send</button>
+                    </form>
+                </div>
+            </div>
+        </section>        
+    </div>
+{% endblock %}

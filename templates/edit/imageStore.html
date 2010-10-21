@@ -1,0 +1,62 @@
+{% extends "index.html" %}
+{% block title %} Main {% endblock %}
+
+{% block content %}
+    <div class="container_16">
+        <div class="grid_4">
+            {% include "modules/leftmenu.html" %}
+        </div>
+        <div class="grid_11">
+            <h2>ImageStore</h2>
+            <div class="status_placeholder">
+                {% include "modules/statusmessages.html" %}
+            </div>
+            <div class="oh ui-widget ui-widget-content ui-corner-all">
+                <div class="grid_7">
+                    <form action="{{ uploadUrl }}" enctype="multipart/form-data" method="post">
+                        <input type="hidden" name="imagestore_key" value="{{ currentImage.key }}" />
+                        <div class="modules_box">
+                            <label for="image_name">Image name</label>
+                            <input id="image_name" type="text" name="image_name" value="{{ currentImage.name }}" />
+                        </div>
+                        <div class="modules_box">
+                            <label for="image_referance">Image referance</label>
+                            <input id="image_referance" type="text" name="image_referance" value="{{ currentImage.imageReferance }}" />
+                        </div>
+                        {% for language in settings.languages %}
+                            <div class="modules_box">
+                                <label for="image_description_{{ language }}">Image description - {{ language }}</label>
+                                {% for description in currentImageDescription %}
+                                    {% ifequal description.lang language %}
+                                        <textarea id="image_description_{{ language }}" name="image_description_{{ language }}">{{ description.description }}</textarea>
+                                    {% endifequal %}
+                                {% empty %}
+                                    <textarea id="image_description_{{ language }}" name="image_description_{{ language }}"></textarea>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                        <div class="modules_box">
+                            <label for="image_file">Image</label>
+                            <input id="image_file" type="file" name="image_file" />
+                        </div>
+                        <button class="floatLeft">[Save]</button>
+                    </form>
+                    {% if currentImage.itemId %}
+                        <form action="/edit/action/DeleteImage" enctype="multipart/form-data" method="post">
+                            <input type="hidden" name="image_id" value="{{ currentImage.itemId }}" />
+                            <button class="floatRight ui-state-error">[Delete]</button>
+                        </form>
+                    {% endif %}
+                </div>
+                <div class="grid_3">
+                    <h2>Image list</h2>
+                    <ul class="image_list">
+                        {% for image in imageList %}
+                            <li><a href="/edit/imageStore/?imageId={{ image.itemId }}" rel="{{ image.imageUrl }}"><span class="ui-icon ui-icon-image"></span>{{ image.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

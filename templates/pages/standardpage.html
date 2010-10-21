@@ -1,0 +1,37 @@
+{% extends "index.html" %}
+{% block title %}{{ pageModule.name }}{% endblock %}
+
+{% block content %}
+    <div class="content {{ pageType }}">
+        {% include "modules/topmenu.html" %}
+        <section class="container_10 oh">
+            <article>
+                <div class="grid_3">
+                    <div class="article_image">
+                    {% for image in pageContent.ImageList %}
+                        <img src="{{ image.url }}=s288" />
+                    {% endfor %}
+                    </div>
+                </div>
+                <div class="grid_7">
+                    <div class="article">
+                        <header><h1>{{ pageContent.MainHeading }}</h1></header>
+                        {% autoescape off %}
+                            {{ pageContent.MainTextBox }}
+                        {% endautoescape %}
+                        
+                        <form id="new_spot_form" action="{{ pageTemplate.uploadUrl }}" enctype="multipart/form-data" method="post">
+                            <input type="hidden" id="lat" name="lat" />
+                            <input type="hidden" id="lng" name="lng" />
+                            <label for="spot_description">Description</label><br />
+                            <textarea id="spot_description" name="spot_description"></textarea><br />
+                            <label for="image_file">Image</label><br />
+                            <input id="image_file" type="file" name="image_file" /><br />
+                            <button>[Save]</button>
+                        </form>
+                    </div>
+                </div>
+            </article>
+        </section>        
+    </div>
+{% endblock %}

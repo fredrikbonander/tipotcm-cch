@@ -1,0 +1,172 @@
+/*
+    Variable Grid System.
+    Learn more ~ http://www.spry-soft.com/grids/
+    Based on 960 Grid System - http://960.gs/
+
+    Licensed under GPL and MIT.
+*/
+
+/* HTML tags
+----------------------------------------------------------------------------------------------------*/
+html, body { background-color: #f3f3f3; height: 100%; margin: 0; padding: 0; width: 100%; }
+body { background-repeat: repeat-x; color: #222; font-family: "Tahoma", Arial; font-size: 12px;}
+
+a { color: #222; font-family: "Tahoma", Arial; font-size: 11px; font-weight: bold; text-decoration: none; }
+a img { border: none;}
+a:hover { text-decoration: underline; }
+a span { font-size: 10px; font-weight: normal;}
+
+input { background-color: #f3f3f3; border: 1px solid #222; color: #5c5c5c; font-size: 10px; height: 13px; padding: 5px; }
+input[type=checkbox] { position: relative; top: 2px; }
+input[type=file] { background-color: transparent; border: none; height: 20px; }
+textarea { background-color: #f3f3f3; border: 1px solid #222; color: #5c5c5c; }
+button { background: none; border: none; color: #5c5c5c; cursor: pointer; font-weight: bold; }
+button span.ui-icon { display: inline-block; height: 13px; position: relative; top: 1px; }
+h1 { font-size: 24px; font-weight: bold; margin: 12px 0; }
+h1 a { color: #222; font-size: 24px; }
+h2 { font-size: 14px; font-weight: bold; margin: 0 0 7px 0; }
+h2 a { color: #222; font-size: 14px; }
+h3 { font-size: 12px; font-weight: bold; margin: 0 0 6px 0; }
+h3 a { color: #222; font-size: 12px; }
+h4 { font-size: 10px; font-weight: bold; margin: 0 0 5px 0; }
+h4 a { color: #222; font-size: 10px; }
+
+ul, ul li { margin: 0; list-style: none; padding: 0; }
+
+/* CSS styles classes
+----------------------------------------------------------------------------------------------------*/
+.oh { overflow: hidden; }
+.hide { display: none: }
+.floatLeft { float: left; }
+.floatRight { float: right; }
+
+/* Containers
+----------------------------------------------------------------------------------------------------*/
+.container_16 { margin-left: auto; margin-right: auto; padding-top: 20px; width: 960px; }
+
+/* Grid >> Global
+----------------------------------------------------------------------------------------------------*/
+.grid_1, .grid_2, .grid_3, .grid_4, .grid_5, .grid_6, .grid_7, .grid_8, .grid_9, .grid_10, .grid_11, .grid_12, .grid_13, .grid_14, .grid_15, .grid_16 { display:inline; float: left; position: relative; margin-left: 10px; margin-right: 10px; }
+
+/* Grid >> Children (Alpha ~ First, Omega ~ Last)
+----------------------------------------------------------------------------------------------------*/
+.alpha { margin-left: 0; } 
+.omega { margin-right: 0; }
+
+.twoCols > .col:first-child + .col + .col
+
+/* Grid >> 16 Columns
+----------------------------------------------------------------------------------------------------*/
+.container_16 .grid_1 { width:40px; }
+.container_16 .grid_2 { width:100px; }
+.container_16 .grid_3 { width:160px; }
+.container_16 .grid_4 { width:220px; }
+.container_16 .grid_5 { width:280px; }
+.container_16 .grid_6 { width:340px; }
+.container_16 .grid_7 { width:400px; }
+.container_16 .grid_8 { width:460px; }
+.container_16 .grid_9 { width:520px; }
+.container_16 .grid_10 { width:580px; }
+.container_16 .grid_11 { width:640px; }
+.container_16 .grid_12 { width:700px; }
+.container_16 .grid_13 { width:760px; }
+.container_16 .grid_14 { width:820px; }
+.container_16 .grid_15 { width:880px; }
+.container_16 .grid_16 { width:940px; }
+
+
+.grid_11.ui-widget { padding: 10px; }
+
+/* Prefix Extra Space >> 16 Columns
+----------------------------------------------------------------------------------------------------*/
+.container_16 .prefix_1 { padding-left:60px; }
+.container_16 .prefix_2 { padding-left:120px; }
+.container_16 .prefix_3 { padding-left:180px; }
+.container_16 .prefix_4 { padding-left:240px; }
+.container_16 .prefix_5 { padding-left:300px; }
+.container_16 .prefix_6 { padding-left:360px; }
+.container_16 .prefix_7 { padding-left:420px; }
+.container_16 .prefix_8 { padding-left:480px; }
+.container_16 .prefix_9 { padding-left:540px; }
+.container_16 .prefix_10 { padding-left:600px; }
+.container_16 .prefix_11 { padding-left:660px; }
+.container_16 .prefix_12 { padding-left:720px; }
+.container_16 .prefix_13 { padding-left:780px; }
+.container_16 .prefix_14 { padding-left:840px; }
+.container_16 .prefix_15 { padding-left:900px; }
+/* Suffix Extra Space >> 16 Columns
+----------------------------------------------------------------------------------------------------*/
+.container_16 .suffix_1 { padding-right:60px; }
+.container_16 .suffix_2 { padding-right:120px; }
+.container_16 .suffix_3 { padding-right:180px; }
+.container_16 .suffix_4 { padding-right:240px; }
+.container_16 .suffix_5 { padding-right:300px; }
+.container_16 .suffix_6 { padding-right:360px; }
+.container_16 .suffix_7 { padding-right:420px; }
+.container_16 .suffix_8 { padding-right:480px; }
+.container_16 .suffix_9 { padding-right:540px; }
+.container_16 .suffix_10 { padding-right:600px; }
+.container_16 .suffix_11 { padding-right:660px; }
+.container_16 .suffix_12 { padding-right:720px; }
+.container_16 .suffix_13 { padding-right:780px; }
+.container_16 .suffix_14 { padding-right:840px; }
+.container_16 .suffix_15 { padding-right:900px; }
+
+/* Login form
+----------------------------------------------------------------------------------------------------*/
+#login_form input { display: block; }
+.login_form { margin: 50px auto 0 auto; width: 260px; }
+.login_form .ui-widget-header { padding: 5px 10px; }
+.login_form .ui-widget-header h2 { margin: 0; }
+.login_form .ui-widget-content { padding: 5px 10px; }
+.login_form .ui-widget-content label { display: block; margin-bottom: 4px;}
+.login_form .ui-widget-content input { display: block; margin-bottom: 10px; width: 226px; }
+
+/* Page tree
+----------------------------------------------------------------------------------------------------*/
+.left_menu > ul { margin-bottom: 16px; }
+ul.actions a { cursor: pointer; display: block; padding: .4em 1em .4em 20px; text-decoration: none; position: relative; width: 80px; }
+ul.actions a span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+.left_menu > ul ul { margin-left: 10px; }
+.left_menu ul li { margin: 2px; }
+.left_menu ul li a { text-decoration: none; }
+.left_menu ul li a span { display: inline-block; position: relative; top: 3px; }
+.left_menu ul.actions li { height: 28px; }
+
+/* modules_box
+----------------------------------------------------------------------------------------------------*/
+.modules_box { margin: 5px 0; }
+.modules_box label { display: block; }
+.modules_box input { width: 350px; }
+.modules_box textarea { height: 150px; padding: 3px; width: 354px; }
+
+.ui-widget-content .grid_7, .ui-widget-content .grid_4, .ui-widget-content .grid_3, .ui-widget-content .grid_10 { padding: 10px 0; }
+.page_settings li { height: 34px; }
+
+/* Status messages
+----------------------------------------------------------------------------------------------------*/
+.status_placeholder { margin-bottom: 5px; }
+
+/* Image Store List
+----------------------------------------------------------------------------------------------------*/
+ul.image_list li a { text-decoration: none; }
+ul.image_list li a span { display: inline-block; margin-right: 3px; position: relative; top: 3px; }
+
+.page_images { margin-top: 10px; }
+.image_list_wrapper { overflow: hidden; width: 430px; }
+.image_list_wrapper button { display: block; clear: left; margin-top: 20px; }
+.image_list_wrapper .list_area { float: left; margin: 0 20px 20px 0; width: 180px;}
+.image_list_wrapper .list_area ul { background-color: #f3f3f3; border: 1px dotted #222; min-height: 20px;  }
+
+#post_dialog textarea { height: 200px; width: 436px; }
+
+/* Clear Floated Elements
+----------------------------------------------------------------------------------------------------*/
+/* http://sonspring.com/journal/clearing-floats */
+.clear {  clear: both; display: block; overflow: hidden; visibility: hidden; width: 0; height: 0; }
+/* http://perishablepress.com/press/2008/02/05/lessons-learned-concerning-the-clearfix-css-hack */
+.clearfix:after { clear: both; content: ' '; display: block; font-size: 0; line-height: 0; visibility: hidden; width: 0; height: 0; }
+.clearfix { display: inline-block; }
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+.clearLeft { clear: left; }

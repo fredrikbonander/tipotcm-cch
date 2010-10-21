@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block title %}tungsten{%endblock%}</title>
+        <link rel="stylesheet" href="/ui/styles/custom-theme/jquery-ui-1.8.4.custom.css" type="text/css" />
+        <link rel="stylesheet" href="/ui/styles/edit.css" type="text/css" />
+    </head>
+
+    <body id="index" class="home">
+        {% block content %}
+        {% endblock %}
+        <script type="text/javascript" src="/ui/scripts/lib/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="/ui/scripts/lib/jquery-ui-1.8.4.custom.min.js"></script>
+        <script type="text/javascript" src="/ui/scripts/lib/json.min.js"></script>
+        <script type="text/javascript" src="/ui/scripts/lib/tiny_mce.js"></script>
+        <script type="text/javascript" src="/ui/scripts/lib/jquery.tinymce.js"></script>
+        <script type="text/javascript" src="/ui/scripts/opt/util.js"></script>
+        <script type="text/javascript" src="/ui/scripts/opt/edit.js"></script>
+    </body>
+</html>

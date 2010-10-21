@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{% block title %} Main {% endblock %}
+
+{% block content %}
+    <div class="container_16">
+        <div class="login_form ui-widget">
+            <div class="status_placeholder">
+                {% include "modules/statusmessages.html" %}
+            </div>
+            <div class="ui-widget-header ui-corner-top">
+                <h2>Login</h2>
+            </div>
+            <div class="ui-widget-content ui-corner-bottom oh">
+                <form id="login_form" method="post" action="/edit/action/login">
+                    <label for="username">Username:</label>
+                    <input name="username" id="username" />
+                    <label for="password">Password:</label>
+                    <input name="password" type="password" id="password" />
+                    <button class="floatRight"><span class="ui-icon ui-icon-locked"></span>Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
