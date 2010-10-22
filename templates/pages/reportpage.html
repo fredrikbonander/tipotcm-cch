@@ -1,0 +1,84 @@
+{% extends "index.html" %}
+{% block title %}{{ pageModule.name }}{% endblock %}
+
+{% block content %}
+    <div class="content {{ pageType }}">
+        
+        <!-- REPORT -->
+        <div data-role="page" id="reportWithImage">
+    
+            <div data-role="header">
+                <h1>{{ pageContent.MainHeading }}</h1>
+            </div><!-- /header -->
+    
+            <div data-role="content" data-theme="c">
+                <fb:login-button autologoutlink="true"></fb:login-button>
+                {% if current_user %}
+                    <p><a href="{{ current_user.profile_url }}"><img src="http://graph.facebook.com/{{ current_user.id }}/picture?type=square"/></a></p>
+                    <p>Hello, {{ current_user.name|escape }}</p>
+                {% endif %}
+            
+                <div id="fb-root"></div>
+                <div data-role="fieldcontain">
+                    <div id="map_canvas">
+                        <div class="loading">
+                            <img src="/ui/images/loader.gif" />
+                            <h3>Loading map...</h3>
+                        </div>
+                    </div>
+                </div>
+                <form class="hide" id="new_spot_form" action="/action/AddSpot" enctype="multipart/form-data" method="post">
+                    <input type="hidden" id="type" name="type" value="{{ pageTemplate.spotType}}" />
+                    <input type="hidden" id="lat" name="lat" />
+                    <input type="hidden" id="lng" name="lng" />
+                    <br />
+                    {% if current_user %}
+                        <input type="hidden" id="userid" name="userid" value="{{ current_user.id }}" />
+                        <input type="hidden" id="username" name="username" value="{{ current_user.name }}" />
+                    {% else %}
+                        <label for="username">What's does people call you?</label><br />
+                        <input type="text" id="username" name="username" /><br />
+                    {% endif %}
+                    <label for="spot_description">Description - Chars left: <span id="chars_left">140</span></label><br />
+                    <textarea id="spot_description" name="spot_description"></textarea><br />
+                    <div id="categories-list" data-role="fieldcontain">
+                        <fieldset data-role="controlgroup"> 
+                            <legend>{% autoescape off %}{{ pageContent.MainTextBox }}{% endautoescape %}</legend> 
+                            {% for category in pageTemplate.categories %}
+                                <input type="radio" name="checkbox-a" id="checkbox-{{ forloop.counter }}a" class="categories" value="{{ category.key }}" /> 
+                                <label for="checkbox-{{ forloop.counter }}a">{{ category.name }}</label> 
+                            {% endfor %}
+                        </fieldset> 
+                    </div>
+                    <div data-role="fieldcontain">
+                        <fieldset data-type="horizontal" data-role="controlgroup">
+                            <legend>Mood:</legend>
+                            <input type="radio" name="mood" id="radio-choice-1" value="3" checked="checked" />
+                            <label for="radio-choice-1">Happy camper!</label>
+                
+                            <input type="radio" name="mood" id="radio-choice-2" value="2"  />
+                            <label for="radio-choice-2">It's like groundhog day...</label>
+                
+                            <input type="radio" name="mood" id="radio-choice-3" value="1"  />
+                            <label for="radio-choice-3">People = S**t !!</label>
+                        </fieldset>
+                    </div>
+                    <button data-role="button">[Save]</button>
+                </form>
+                 <!-- {{ pageTemplate.uploadUrl }} -->
+                    
+                    
+                        <!--
+                        <label for="image_file">Image</label><br />
+                        <input id="image_file" type="file" name="image_file" /><br />
+                        -->
+                
+            </div><!-- /content -->
+    
+            <div data-role="footer">
+                <p><a href="#start">Back to foo</a></p> 
+            </div><!-- /footer -->
+        </div><!-- /page -->
+
+    </div>
+{% endblock %}

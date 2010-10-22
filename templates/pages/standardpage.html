@@ -19,14 +19,16 @@
                         {% autoescape off %}
                             {{ pageContent.MainTextBox }}
                         {% endautoescape %}
-                        
-                        <form id="new_spot_form" action="{{ pageTemplate.uploadUrl }}" enctype="multipart/form-data" method="post">
+                        <!-- {{ pageTemplate.uploadUrl }} -->
+                        <form id="new_spot_form" action="/action/AddSpot" enctype="multipart/form-data" method="post">
                             <input type="hidden" id="lat" name="lat" />
                             <input type="hidden" id="lng" name="lng" />
                             <label for="spot_description">Description</label><br />
                             <textarea id="spot_description" name="spot_description"></textarea><br />
+                            <!--
                             <label for="image_file">Image</label><br />
                             <input id="image_file" type="file" name="image_file" /><br />
+                            -->
                             <button>[Save]</button>
                         </form>
                     </div>

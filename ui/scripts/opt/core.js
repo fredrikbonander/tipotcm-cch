@@ -9,7 +9,7 @@
 
     view = {
         init: function() {
-            $('.footer_menu li:first').bind('click', function () {
+            /*$('.footer_menu li:first').bind('click', function () {
                 $('.share_this').data('timeout', false).animate({ width: '190px' });
             });
             
@@ -21,31 +21,134 @@
                 clearTimeout($(this).data('timeout'));
             });
             
-            $('.share_this a').click(function () {});
+            $('.share_this a').click(function () {});*/
+            
+            $('#spot_description').live('keyup', function (e) {
+                if ($(this).val().length > 140) {
+                    $(this).val($(this).val().substring(0, 140))
+                }
+                
+                $('#chars_left').text(140 - $(this).val().length);
+            });
+            
+            $('.show_on_map').live('click', function (e) {
+                e.preventDefault();
+                view.map.showSpotOnMap(this);
+                return false;
+            });
+            
+            $('#tmp_fieldset .closeby-spots').live('click', function () {
+                $('#categories-list').hide();
+            });
+            
+            $(document).bind("ajaxComplete", function(){
+                view.ajax.handlePageChange(arguments[2]);
+            });
+        },
+        ajax : {
+            handlePageChange : function (page) {
+                if (page.url.indexOf('/en-us/reportpage/') != -1) {
+                    view.spots.init();
+                }
+            }
         },
         /**
         * Handles Image Gallery.
         * @base view
         * @class 
         */
-        
         spots : {
             init : function () {
                 if (navigator.geolocation) {
-                    console.log('arguments')
                     navigator.geolocation.getCurrentPosition(view.spots.locateMe);
-                    console.log('arguments2')
                 }
             },
-            
+                
             locateMe : function (position) {
                 // Need to get position from browser and check if it's already active since FF trigger's this twice
                 if (position && position.coords && $('#new_spot_form').length) {
+                    $('#new_spot_form').removeClass('hide');
                     $('#new_spot_form #lat').val(position.coords.latitude);
                     $('#new_spot_form #lng').val(position.coords.longitude);
+                    
+                    view.spots.getSpots(position.coords);
+                }
+            },
+            
+            getSpots : function (position) {
+                model.addToQueue(false, ['GetCloseBySpots', { 'lat' : position.latitude, 'lng' : position.longitude }], function (data) {
+                    view.map.showMap(data, position);
+                });
+            }
+        },
+        
+        map : {
+            spotMaker : null,
+            showSpotOnMap : function (sender) {
+                var rel = $(sender).attr('id').split('_');
+                    lat = parseFloat(rel[0]),
+                    lng = parseFloat(rel[1]);
+                
+                if (!this.spotMarker) {
+                    this.spotMarker = new google.maps.Marker({
+                        map: view.map.gmap,
+                        title: "this is you!"
+                    })
+                }
+                
+                this.spotMarker.setPosition(new google.maps.LatLng(lat, lng));
+            },
+            
+            showMap : function (data, position) {
+                if ($('#tmp_fieldset').length) {
+                    return;
+                }
+                
+                var options = {
+                    zoom: 12,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                },
+                i = 0,
+                j = 0,
+                initialLocation = new google.maps.LatLng(position.latitude, position.longitude),
+                d;
+                
+                this.gmap = new google.maps.Map(document.getElementById("map_canvas"), options);
+                this.gmap.setCenter(initialLocation);
+                this.markersList = [];
+                this.currentPosition = new google.maps.Marker({
+                    position: initialLocation, 
+                    map: view.map.gmap,
+                    title: "this is you!"
+                })
+                
+                if (!data.length) {
+                    return;
                 }
 
+                tmp = '<div data-role="fieldcontain"><fieldset id="tmp_fieldset" data-role="controlgroup"><label class="ui-input-text">Close by spots:</label>';
+                for (i = 0; i < data.length; i += 1) {
+                    d = data[i];
+                    tmpStr = '';
+                    
+                    for (j = 0; j < d.dList.length; j += 1) {
+                        tmpStr += '<strong>' + d.dList[j].username + ' says:</strong> ' + d.dList[j].description;  
+                        
+                        if (j != (d.dList.length - 1)) {
+                            tmpStr += ',<br /> ';
+                        }
+                    };
+                    
+                    tmp += '<input type="radio" name="closeby-spots" id="checkbox-tmp-' + i + 'a" class="closeby-spots" value="' + d.key +'" />';
+                    tmp += '<label for="checkbox-tmp-' + i + 'a">' + tmpStr + ' - distance: ' + d.distance + ' - <span class="show_on_map" id="' + d.lat  +'_' + d.lng  +'">[Show on map]</span></label>'
+                }
+                                
+                tmp += '</fieldset></div>';
+                
+                $('#new_spot_form fieldset:first').parent().before(tmp);
+                $('#tmp_fieldset').find('input').customCheckboxRadio();
             }
+            
         },
         
         /**
@@ -250,7 +353,7 @@
         */
         addToAjaxQueue: function(payload, queueId) {
             var ajaxOptions = {
-                url: '/ScriptServices/ClientDataTransferService.asmx/GetData',
+                url: '/ClientService',
                 type: 'post',
                 dataType: 'json',
                 contentType: 'application/json',

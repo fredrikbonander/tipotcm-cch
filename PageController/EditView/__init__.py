@@ -5,7 +5,7 @@ Created on Sep 9, 2010
 '''
 
 from google.appengine.api import blobstore
-from DataFactory import dbPages
+from DataFactory import dbPages, dbGeo
 from DataFactory import dbImageStore
 from DataFactory import  dbUser
 from PageService import PageTemplates
@@ -18,6 +18,7 @@ import PageService
 import Settings
 import ImageStore
 import logging
+import Geo
 
 class GetHandler:
     def __init__(self, path, *args):
@@ -58,6 +59,13 @@ class GetHandler:
     
     def main(self, view, query):
         view.templateTypes = Utils.getPageTemplates(PageTemplates, PageType)
+        view.templateFile = 'edit/' + self.pathList[0] + '.html'
+    
+    def geocategory(self, view, query):
+        if query.getvalue('categoryrId'):
+            view.currentCategory = dbGeo.Categories.get_by_id(int(query.getvalue('categoryrId')))
+            
+        view.categoryList = dbGeo.Categories.all()
         view.templateFile = 'edit/' + self.pathList[0] + '.html'
     
     def imageStore(self, view, query):
@@ -124,6 +132,10 @@ class PostHandler:
         view.StatusMessage = Users.AddOrUpdate(post)
         view.redirect = '/edit/users/?status=' + str(view.StatusMessage['status'])  + '&message=' + view.StatusMessage['message']
     
+    def AddOrUpdateGeocategory(self, view, post):
+        view.StatusMessage = Geo.AddOrUpdate(post)
+        view.redirect = '/edit/geocategory/?status=' + str(view.StatusMessage['status'])  + '&message=' + view.StatusMessage['message']
+        
     def DeleteUser(self, view, post):
         view.StatusMessage = Users.DeleteUser(post)
         view.redirect = '/edit/users/?status=' + str(view.StatusMessage['status'])  + '&message=' + view.StatusMessage['message']

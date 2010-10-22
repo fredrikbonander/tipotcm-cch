@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+{% block title %} Main {% endblock %}
+
+{% block content %}
+    <div class="container_16">
+        <div class="grid_4">
+            {% include "modules/leftmenu.html" %}
+        </div>
+        <div class="grid_11">
+            <h2>Categories</h2>
+            <div class="status_placeholder">
+                {% include "modules/statusmessages.html" %}
+            </div>
+            <div class="oh ui-widget ui-widget-content ui-corner-all">
+                <div class="grid_7">
+                    <form action="/edit/action/AddOrUpdateGeocategory" enctype="multipart/form-data" method="post">
+                        <input type="hidden" name="category_id" value="{{ currentCategory.itemId }}" />
+                        <div class="modules_box">
+                            <label for="category_name">Category name</label>
+                            <input id="category_name" type="text" name="category_name" value="{{ currentCategory.name }}" />
+                        </div>
+                       <div class="modules_box">
+                            <label for="category_str_id">category_id</label>
+                            <input id="category_str_id" type="text" name="category_str_id" />
+                        </div>
+                        <button class="floatLeft">[Save]</button>
+                    </form>
+                </div>
+                <div class="grid_3">
+                    <h2>Category list</h2>
+                    <ul class="image_list">
+                        {% for category in categoryList %}
+                            <li><a href="/edit/geocategory/?categoryrId={{ category.itemId }}"><span class="ui-icon ui-icon-person"></span>{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

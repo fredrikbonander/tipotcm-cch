@@ -2,8 +2,10 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <meta name="google-site-verification" content="zkWIXuPFTnHaBzXDv8T_urM5X5XA-bpnTurTFDtyjKA" />
-        <title>{% block title %}{%endblock%} &ndash; Martin Adler</title>
+        <title>{% block title %}{%endblock%} &ndash; </title>
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.css" />
         <link rel="stylesheet" href="/ui/styles/main.css" type="text/css" />
         <!--[if IE]>
             <script type="text/javascript">
@@ -21,30 +23,27 @@
     <body id="index" class="home">
         {% block content %}
         {% endblock %}
-        <section class="container_10">
-            <div class="footer_border">
-                <footer class="footer">
-                    <ul role="navigation" class="footer_menu">
-                        <li>
-                            <div class="share_this">
-                                <ul>
-                                    <li><a rel="external" href="http://twitter.com/home?status={{ fullPath }}">Twitter</a> / </li>
-                                    <li><a rel="external" href="http://www.facebook.com/share.php?u={{ fullPath }}">Facebook</a> / </li>
-                                    <li><a rel="external" href="mailto:?subject={{ fullPath }}">E-Mail</a></li>
-                                </ul>
-                            </div>
-                            <a href="javascript:void(0)">Share this</a>
-                        </li>
-                        {% for page in footerTree.children %}
-                            <li><a rel="copyright" href="{{ page.pageModule.path }}">{{ page.pageModule.name }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </footer>
-            </div>
-        </section>
-        <script type="text/javascript" src="/ui/scripts/lib/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        <script src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js"></script>
         <script type="text/javascript" src="/ui/scripts/opt/util.js"></script>
         <script type="text/javascript" src="/ui/scripts/opt/core.js"></script>
+        <script>
+          window.fbAsyncInit = function() {
+            FB.init({appId: '{{ facebook_app_id }}', status: true, cookie: true,
+                     xfbml: true});
+            FB.Event.subscribe('{% if current_user %}auth.logout{% else %}auth.login{% endif %}', function(response) {
+              window.location.reload();
+            });
+          };
+          (function() {
+            var e = document.createElement('script');
+            e.type = 'text/javascript';
+            e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+            e.async = true;
+            document.getElementById('fb-root').appendChild(e);
+          }());
+        </script>
         <!--<script type="text/javascript">
           var _gaq = _gaq || [];
           _gaq.push(['_setAccount', 'UA-18579449-1']);

@@ -1,0 +1,60 @@
+{% extends "index.html" %}
+{% block title %}{{ pageModule.name }}{% endblock %}
+
+{% block content %}
+    <div class="content {{ pageType }}">
+        <!-- Start of first page -->
+        <div data-role="page" id="start">
+            <div data-role="header">
+                <h1>{{ pageContent.MainHeading }}</h1>
+            </div><!-- /header -->
+            <div data-role="content" data-theme="a">
+                <fb:login-button autologoutlink="true"></fb:login-button>
+                {% if current_user %}
+                    <p><a href="{{ current_user.profile_url }}"><img src="http://graph.facebook.com/{{ current_user.id }}/picture?type=square"/></a></p>
+                    <p>Hello, {{ current_user.name|escape }}</p>
+                {% endif %}
+            
+                <div id="fb-root"></div>
+                <p>
+                    {% autoescape off %}
+                    {{ pageContent.MainTextBox }}
+                    {% endautoescape %}
+                </p>
+               <ul data-role="listview" data-theme="d" data-inset="true"> 
+                    <li data-role="list-divider">descriptions - {% for item in pageTemplate.spot.category %}{{ item.name }}{% endfor %} <span class="ui-li-count">{{ pageTemplate.spot.dList|length }}</span></li>
+                    {% for item in pageTemplate.spot.dList %}
+                    <li> 
+                        {% if item.userid %}<div style="position: relative !important;"><img style="position: relative !important;" class="ui-li-thumb" src="http://graph.facebook.com/{{ item.userid }}/picture?type=square"/></div>{% endif %}
+                        <h3>{{ item.username }} says:</h3>
+                        <p><strong>Mood:</strong>
+                            {% ifequal item.mood 3 %}
+                                I'm HAPPY, it's SNOW outside!
+                            {% endifequal %}
+                            {% ifequal item.mood 2 %}
+                                Mondays sucks.
+                            {% endifequal %}
+                            {% ifequal item.mood 1 %}
+                                Screw you guys, I'm going home!
+                            {% endifequal %}
+                        </p>
+                        <p>{{ item.description }}</p>
+                        <p class="ui-li-aside"><strong>{{ item.creationDate|date:"D d M Y H i" }}</strong></p>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div data-role="fieldcontain" data-theme="a">
+                    <fieldset data-role="controlgroup">
+                        <legend>{{ pageContent.SubHeading }}</legend>
+                       <a href="/en-us/reportpage/?spotType=1" data-role="button">Report</a> 
+                       <a href="/en-us/reportpage/?spotType=2" data-role="button">Idea</a> 
+                    </fieldset>
+                </div>
+            </div><!-- /content -->
+    
+            <div data-role="footer">
+                <h4>&nbsp</h4>
+            </div><!-- /footer -->
+        </div><!-- /page -->
+    </div>
+{% endblock %}

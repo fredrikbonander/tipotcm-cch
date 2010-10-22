@@ -3,26 +3,34 @@
 
 {% block content %}
     <div class="content {{ pageType }}">
-        {% include "modules/topmenu.html" %}
-        <section class="container_10 oh">
-            <article>
-                <div class="grid_10 image_holder">
-                {% for image in pageContent.ImageList %}
-                    <img src="{{ image.url }}" alt="{{ image.description|striptags }}" title="{{ image.description|striptags }}" />
-                {% endfor %}
+        <!-- Start of first page -->
+        <div data-role="page" id="start">
+            <div data-role="header">
+                <h1>{{ pageContent.MainHeading }}</h1>
+            </div><!-- /header -->
+            <div data-role="content" data-theme="a">
+                <fb:login-button autologoutlink="true"></fb:login-button>
+                {% if current_user %}
+                    <p><a href="{{ current_user.profile_url }}"><img src="http://graph.facebook.com/{{ current_user.id }}/picture?type=square"/></a></p>
+                    <p>Hello, {{ current_user.name|escape }}</p>
+                {% endif %}
+            
+                <div id="fb-root"></div>
+                {% autoescape off %}
+                {{ pageContent.MainTextBox }}
+                {% endautoescape %}
+                <div data-role="fieldcontain" data-theme="a">
+                    <fieldset data-role="controlgroup">
+                        <legend>{{ pageContent.SubHeading }}</legend>
+                       <a href="/en-us/reportpage/?spotType=1" data-role="button">Report</a> 
+                       <a href="/en-us/reportpage/?spotType=2" data-role="button">Idea</a> 
+                    </fieldset>
                 </div>
-                <header class="grid_4">
-                    <hgroup> 
-                        <h1>{{ pageContent.MainHeading }}</h1>
-                        <h2>{{ pageContent.SubHeading }}</h2>
-                    </hgroup>
-                </header>
-                <div class="grid_5">
-                    {% autoescape off %}
-                    {{ pageContent.MainTextBox }}
-                    {% endautoescape %}
-                </div>
-            </article>
-        </section>
+            </div><!-- /content -->
+    
+            <div data-role="footer">
+                <h4>&nbsp</h4>
+            </div><!-- /footer -->
+        </div><!-- /page -->
     </div>
 {% endblock %}

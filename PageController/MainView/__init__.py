@@ -11,6 +11,7 @@ import Settings
 import Utils
 from google.appengine.api import memcache
 import PageHandler
+import Geo
 
 class GetHandler:
     def __init__(self, path, *args):
@@ -95,6 +96,10 @@ class PostHandler:
         self.pathList = Utils.parsePath(path[0])
         func = getattr(self, self.pathList[1])
         func(*args)
+        
+    def AddSpot(self, view, post):
+        view.StatusMessage = Geo.AddSpot(post)
+        view.redirect = '/en-us/thankspage/' + '?spotId=' + str(view.StatusMessage['spotId'])
         
     def SendContactEmail(self, view, post):
         view.StatusMessage = PageHandler.SendContactMail(post)
