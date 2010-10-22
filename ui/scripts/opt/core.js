@@ -39,6 +39,16 @@
             
             $('#tmp_fieldset .closeby-spots').live('click', function () {
                 $('#categories-list').hide();
+                $('#flip_switch').removeClass('hide');
+                
+                if ($(this).hasClass('true')) {
+                    $('#flip_switch select option[value=true]').attr('selected', 'selected');
+                } else {
+                    $('#flip_switch select option[value=false]').attr('selected', 'selected');
+                }
+                
+                $('#flip_switch select').next().remove();
+                $('#flip_switch select').slider();
             });
             
             $(document).bind("ajaxComplete", function(){
@@ -131,6 +141,10 @@
                     d = data[i];
                     tmpStr = '';
                     
+                    if (d.fixed == true) {
+                        tmpStr += '<strong>FIXED !!</strong>';
+                    }
+                    
                     for (j = 0; j < d.dList.length; j += 1) {
                         tmpStr += '<strong>' + d.dList[j].username + ' says:</strong> ' + d.dList[j].description;  
                         
@@ -139,7 +153,7 @@
                         }
                     };
                     
-                    tmp += '<input type="radio" name="closeby-spots" id="checkbox-tmp-' + i + 'a" class="closeby-spots" value="' + d.key +'" />';
+                    tmp += '<input type="radio" name="closeby-spots" id="checkbox-tmp-' + i + 'a" class="closeby-spots ' + d.fixed + '" value="' + d.key +'" />';
                     tmp += '<label for="checkbox-tmp-' + i + 'a">' + tmpStr + ' - distance: ' + d.distance + ' - <span class="show_on_map" id="' + d.lat  +'_' + d.lng  +'">[Show on map]</span></label>'
                 }
                                 

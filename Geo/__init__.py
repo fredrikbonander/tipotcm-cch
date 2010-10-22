@@ -53,7 +53,14 @@ def AddSpot(params):
     
     if params.get('closeby-spots'):
         saveSpotDescription(description = params.get('spot_description'), userid = params.get('userid'), username = params.get('username'), mood = params.get('mood'), spotKey = params.get('closeby-spots'))
-        spotId = db.Key(params.get('closeby-spots')).id()
+        spotKey = db.Key(params.get('closeby-spots'))
+        spotId = spotKey.id()
+        
+        if params.get('fixed') == 'true':
+            spot = dbGeo.Spots.get(spotKey)
+            spot.fixed = True
+            db.put(spot)
+        
     else:
         spotId = saveSpot(description = params.get('spot_description'), type = params.get("type"), lat = params.get('lat'), lng = params.get('lng'), mood = params.get('mood'), category = categoryList, userid = params.get('userid'), username = params.get('username'))
         
@@ -103,6 +110,7 @@ def saveSpot(**kwargs):
     geo = dbGeo.Spots()
     geo.type = int(type)
     geo.category = category
+    geo.fixed = False
 #    geo.imageList = '0'
     if lat:
         geo.lat = float(lat)
@@ -160,6 +168,6 @@ def getCloseBySpots(lat, lng):
             for d in descriptions:
                 dList.append({ 'username': d.username, 'description' : d.description, 'mood' : d.mood })
             
-            spotList.append({ 'lat' : spot.lat, 'lng' : spot.lng, 'dList' : dList, 'distance' :str(calulateDistance(spot, rndPoint)) + 'm', 'key' : str(spot.key())})
+            spotList.append({ 'lat' : spot.lat, 'lng' : spot.lng, 'fixed' : spot.fixed, 'dList' : dList, 'distance' :str(calulateDistance(spot, rndPoint)) + 'm', 'key' : str(spot.key())})
             
     return spotList

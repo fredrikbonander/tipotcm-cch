@@ -8,7 +8,7 @@
             <div data-role="header">
                 <h1>{{ pageContent.MainHeading }}</h1>
             </div><!-- /header -->
-            <div data-role="content" data-theme="a">
+            <div data-role="content" data-theme="c">
                 <fb:login-button autologoutlink="true"></fb:login-button>
                 {% if current_user %}
                     <p><a href="{{ current_user.profile_url }}"><img src="http://graph.facebook.com/{{ current_user.id }}/picture?type=square"/></a></p>

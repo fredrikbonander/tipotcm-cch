@@ -6,7 +6,8 @@ class Spots(db.Model):
     imageList = db.StringProperty()
     lat = db.FloatProperty()
     lng = db.FloatProperty()
-
+    fixed = db.BooleanProperty()
+    
     @property
     def itemId(self):
         return self.key().id()
